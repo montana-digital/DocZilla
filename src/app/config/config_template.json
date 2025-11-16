@@ -1,0 +1,33 @@
+{
+  "directories": {
+    "input": "./input",
+    "output": "./output"
+  },
+  "cache": {
+    "enabled": true,
+    "max_size_gb": 2,
+    "ttl_seconds": 3600
+  },
+  "watchdog": {
+    "enabled": true,
+    "polling_interval": 1.0
+  },
+  "logging": {
+    "level": "INFO",
+    "rotation_size_mb": 50,
+    "retention_days": 30
+  },
+  "ui": {
+    "auto_sample_threshold_rows": 5000,
+    "auto_sample_threshold_cols": 100,
+    "preview_percentage": 10
+  },
+  "logos": {
+    "main": "",
+    "data_handler": "",
+    "document_handler": "",
+    "image_handler": "",
+    "settings": ""
+  }
+}
+

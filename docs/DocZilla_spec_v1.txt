@@ -1,0 +1,136 @@
+DocZilla is a document conversion app, that is aimed at providing the user a rich but simple document conversion and manipulation app, that contains advanced features and technical insight into documents.
+We will be using Streamlit, Python, Pandas, Numpy and various conversion libraries. We want to ensure we are using the latest supported, and utilizing all the advanced features to maximise processing efficiency.
+Key feature of Streamlit is the Multipage feature where py files are turned into linked pages in the UI in the sidebar, a feature we want to utilize for each File Type Converter and segregate the code for easier trouble shooting. But be sure to centralize utility functions for efficiency.
+We want efficiency, so utilize Fragments in Streamlit, where practical to minimize the processing load on the app, as well as improve the user experience.
+
+UI
+Utilize user caching and session to make the app efficient, download to case images and content, to minimise processing load on the app where possible, and again, helping speed up the user experience.
+
+Each page has a Table with Col 1- Title and a 2 line max summary of the app. Next Row - Quick Start instructions bullet pointed. Col 2 merges Row 1 and 2 - contains a Logo for that app. 
+	- Supplied is an example of a 'main.py' and animation used for the Title (keep the 'part of the SPEAR Toolkit' part and Animate in the app name replacing the original Title.
+	- Logo should be provided by the user, add in a place holder for the logo.
+	- Sidebar should be persistent throughout the user navigating the app. Under the Pages name, the DocZilla with a summary - 'The file conversation specialist.'
+	- Sidebar should include Buttons that open the Input and Output Directories on users system.
+	
+Main Page - Similar style to the example provided, with relevant information replaced.
+
+Data File Handler
+Title section.
+Drag drop file section, only excepting CSV, JSON, XLSX, XLS, TXT, XML and any other Data File that is popular.
+When the file(s) are dropped in, a quick analysis of the files provided and if they contain a valid file structure.
+Provide a quick analysis of the files, including if valid, number of rows, columns, objects, etc. Total file size (if multiple files sum).
+Optionally, the user can also request to see the file metadata - for each file, under the table, if selected, include a container Titled Metadata with each files meta hidden under a collapsible.
+
+Display the data in an appropriate format, be it a DataFrame, JSON / XML.
+If multiple files, allow the user a select menu to choose which, up to 3 data files, they would like to view, which will then be displayed below.
+	- If it is a file large file, say over 10,000 rows or 100  columns, the user is limited to 10% of the view, and they manually can adjust to show additional data in the UI - saving loading loads of data.
+Allow the user to edit the data file, - add or remove columns and rows. Remove empty rows or empty columns and Save As Copy (never overwrite original) to default output - original name and timestamp. (if not changed in Settings) 
+
+Output to Input - Allow the user to select files in the Output directory, to move into the input directory, deleting them from output (alternative way to add files to app is via Input Dir), which will detect compatible files in the Input, and give user an option in the UI to 'Load from Input Dir'. Once copied from Output, User can select to delete in Output, only if the same files are now detected in Input file and Output files are safe to 
+
+Select Tool option to display
+
+Converter
+Now - depending on what the user done we now have the options - 
+	- If all File types are the same - Combine (Append) Data into single file and convert - or convert the files individually.
+		○ Select available conversions for provided filetype
+	- If all Files types are NOT the same - ask user if they want to unify to 1 file type - after which, convert the required files to the user selected type, outputing already matching file types as is with the name updated with timestamp.
+		○ Again, ask if want to combine or individual files.
+
+
+Data Fragment
+Another option, if to fragment the data - say we have a XLSX file with 900,000 rows, with size of 200mb - but we must have them in 10mb files to send. So split up the data up into smaller files, with appropriate file labelling into a folder in the output - optionally Zip the output folder (feature for all bulk outputs, ask user)
+
+Table Data Cleaner (CSV, XLSX, CSV format txt files, etc)
+Basic functions like 
+	- Remove empty rows and columns
+	- Handling missing values - ask user to select columns, and if they want to 'N/A' all empty cells in selected columns. 
+	- Remove duplicates - Ask users to select columns, where values all gotta match to be counted as a duplicate.
+	- Standardize Format - Select Column and if its numeric, select to which decimal to round or how to display large values.
+	- Standardize Phone Number - Select column, select which format they want the phone number to be in. A new column to right off selected is created, inputting the formatted data.
+	- Standardize URL - Select Column, and select the options to include - outputting a standard - e.g. Base domain only, in / exclude https:// , in / exclude path - create new column to right for output
+	- Outlier cells - Identify rows, columns, cells, where the data seems like an outlier - e.g. text in an all numbers column, or values that stray a long bit from the average, etc.
+		○ The rows where the data is found, should be displayed to the user with options to delete rows, edit, or keep as is.
+	- Remove empty space - Select columns and remove any empty space.
+	- Remove characters - Select columns - Allow user to provide a list of characters in an input,
+
+Group By for Tables
+Select Table
+Select Column to Group on and Count, Sum, etc the other column
+
+Merge Tables (available if 2 or more files of same type uploaded)
+User can select 2 DataFrames, and a Column in each to merge on.
+	- Include a 'merge on similar' option - unless the value gets a 100% match, additionally check if any values are about 80% similar - just an additional check incase formatting is different (text data only)
+	- User can select what columns they want to merge into the new dataframe.
+		○ Select what to do if column field names conflict - add as new column with underscroll at start of original name. or keep set 1 (original) or set 2 (incoming)
+
+Document File Handler
+This Page app deals with Document files like PDF, Doc, Docx rtf, txt, odt, HTML.
+
+The User should similarly upload the file to the drag drop or into input dir (active button shown) - 1 or multiple doc files 
+If all same format
+
+Display Document
+With basic text only editing, we want to preserve the structure of document, so we should only really want to be editing the text. Same as Data File Handler, display file metadata optionally 
+
+Converter
+Select file(s), and which format to convert into. Similarly, depending on what selection of files we have, provide the appropriate unify, convert option.
+
+Document Search
+Search across all the documents uploaded to the app. User should be able to type in text input, and the 1 or many files, should be searched, displaying the files that contain that information in UI, each being behind a collapsable (lazy load)
+	- When the document is uncollapsed, the user should be able to edit the data, and save as a copy, the edited document.
+
+Move Pages
+Select 1 document (if multiple), and have user select the page to move and then select 'in front of page', once happy perform the move, and display result, the user can then select another page to move - once happy with all the page moves, they press save, where a copy of new document with moved pages is saved.
+
+Append Documents
+User selects the first document, then multi select the other documents, in the order they should be appended to each other.
+
+Remove Pages
+Select document, then multi select which pages to remove. Then save as copy the new document minus the pages.
+
+
+Image File Handler
+Same as above, Title and then upload files or load from input, 1 or multiple. 
+
+Converter
+Select image(s) and what to convert them into - if already that format the image should just copy over with the name changed with timestamp added
+
+Compressor
+Shrink the file sizes of images.
+Select the images, and the percentage to compress them by with estimated (combined) file size of output.
+
+Cropping
+Select Image - it is displayed with the ability for user to custom crop using mouse. Select an aspect ratio to position the image into which may require scaling the image to fit. User configures and then Saves As copy
+
+Single Image Combine
+This function requires more than 1 image, and it places the images into a Grid of 3 with a distinct white space between each row, containing label text (e.g. image 1, image 2) - to set image label, the user can select, use filename or use custom label that will iterate, 1, 2, 3.
+If there is a mix of landscape and vertical images - the landscape may be positioned across multiple cells in the grid (e.g. take a row to position the landscape image)
+This will essentially stitch all the images into 1 large image. Now recognizing that the images provided may not be all the same aspect ratio or same size or quality - this large stitched image is meant to be feed into an OCR reader (not this app, no machine learning here). So we must try retain enough quality to allow for any text in the image to be readable. Therefore this function must do its best to calculate and position the images in this single image. Initially limit it to 9 images per image output.
+
+
+Settings
+The user should have a page where they can configure the settings -
+	- Input and output locations
+	- Logos changes (upload images) for each tool page, including main logo
+	- View activity logs - what has been uploaded, and converted as well as any errors or warnings (which should also show in the UI)
+	- Any information on the cache size / session size at the current time.
+
+
+Architecture
+This app should be build using proper software development and engineering best practices. We want to detail out each function and the dependencies we can utilize, as well as alternatives and fallbacks. Iron out any issues, and build the app with modular code, where we can build out comprehensive functions and utilize them throughout.
+
+Error handling and Dependencies
+We want to ensure good user experience, and therefore we should try segment functions and UI components so that they become unavailable if a function is missing a dependency or otherwise can not be utilize on the dataset to avoid running into errors.
+When errors occur, they should gracefully fail, and provide as much info as to why, to allow the user to troubleshoot.
+Design the app to have exception capture wrappers for all functions display good info on issue in the UI
+
+Fragmenting and Efficient Loading
+Utilize Stream fragment feature in the design, we may be handling lots of data and performing lots of changes in the UI to the data, we want to avoid having to reload unchanged components or data. Efficiency in this app is key as we aim to eventually deploy it on cloud and don't want to use too much resource.
+
+Packaging
+Initially, this app will be deployed on a Windows system. We want to make setup and launch, easy for the end user who will not be technical or coders. We must have a .py to first setup the app, checking system is Windows (with warning if not, as not tested on other systems) - create a new environment, letting the user select the version of Python they want, based on available python versions on system - check if user wants app only, or include testing suite dependencies too. Install dependencies into environment, and tell user to run run_app now as installation is complete.
+	- User runs app, which checks for environment and core minimum requirement dependencies are installed, and then runs the app.
+
+Documentation, and build phasing, project management, and Git
+We need to document a detailed plan and phasing of the build. Phase 0, is create the detailed documents, and intialise the required git repo to track, include project management and testing routines into the planning, as well as ensuring to upload documentation with project status, and any off-plan changes required.
