@@ -42,12 +42,26 @@ def render_sidebar():
     config = get_config()
     
     with st.sidebar:
-        # Logo
-        logo_path = config.get("logos.main", "")
-        if logo_path and Path(logo_path).exists():
-            st.image(logo_path, width=150)
+        # Logo - try multiple locations
+        logo_path = None
+        
+        # Try config first
+        config_logo = config.get("logos.logo_main", "")
+        if config_logo and Path(config_logo).exists():
+            logo_path = config_logo
+        # Try assets folder
+        elif Path("src/app/assets/logos/DocZilla_logo.jpg").exists():
+            logo_path = "src/app/assets/logos/DocZilla_logo.jpg"
+        # Try docs folder
+        elif Path("docs/DocZilla_logo.jpg").exists():
+            logo_path = "docs/DocZilla_logo.jpg"
+        # Try docs/logo.png
         elif Path("docs/logo.png").exists():
-            st.image("docs/logo.png", width=150)
+            logo_path = "docs/logo.png"
+        
+        if logo_path:
+            st.image(logo_path, width=200, use_container_width=True)
+            st.markdown("")  # Spacing
         else:
             st.markdown("### 🦕 DocZilla")
         
@@ -68,11 +82,11 @@ def render_sidebar():
         col1, col2 = st.columns(2)
         
         with col1:
-            if st.button("📂 Input Dir"):
+            if st.button("📂 Input Dir", use_container_width=True):
                 open_directory("input", config)
         
         with col2:
-            if st.button("📂 Output Dir"):
+            if st.button("📂 Output Dir", use_container_width=True):
                 open_directory("output", config)
         
         st.markdown("---")
