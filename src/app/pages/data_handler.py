@@ -782,7 +782,8 @@ def handle_conversion_operations():
                 convert_all_files(target_format, output_dir)
             else:
                 # Convert single file
-                convert_single_file(file_path, current_ext, target_format, output_dir)
+                output_file = convert_single_file(file_path, current_ext, target_format, output_dir)
+                st.success(f"✅ Converted: {output_file.name}")
         
         except Exception as e:
             st.error(f"Conversion failed: {e}")
@@ -863,7 +864,7 @@ def save_edited_file(file_name: str, original_df: pd.DataFrame):
 def convert_single_file(file_path: Path, from_format: str, to_format: str, output_dir: Path):
     """Convert single file to target format."""
     output_file = ConversionRegistry.convert_file(file_path, from_format, to_format, output_dir)
-    st.success(f"✅ Converted: {output_file.name}")
+    return output_file
 
 
 def convert_all_files(target_format: str, output_dir: Path):
