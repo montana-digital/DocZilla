@@ -7,6 +7,16 @@ Part of the SPEAR Toolkit.
 
 import streamlit as st
 from pathlib import Path
+import sys
+
+# Add src to path for imports
+sys.path.insert(0, str(Path(__file__).parent.parent.parent))
+
+from src.app.utils.logging import get_logger, generate_request_id
+from src.app.utils.cache import init_cache_state
+from src.app.utils.config import get_config
+from src.app.components.animation import render_title_with_animation
+from src.app.components.layout import render_sidebar
 
 # Configure page
 st.set_page_config(
@@ -21,9 +31,35 @@ if "session_id" not in st.session_state:
     import uuid
     st.session_state.session_id = str(uuid.uuid4())
 
-# Main title with animation placeholder
-st.title("DocZilla")
-st.caption("Part of the SPEAR Toolkit")
+# Initialize utilities
+init_cache_state()
+config = get_config()
+
+# Initialize logger
+log_dir = Path("logs")
+if config.get("directories.logs"):
+    log_dir = Path(config.get("directories.logs"))
+logger = get_logger(log_dir)
+
+# Log app start
+request_id = generate_request_id()
+logger.log(
+    level="INFO",
+    message="DocZilla application started",
+    module=__name__,
+    request_id=request_id,
+    operation="app_start"
+)
+
+# Render sidebar
+render_sidebar()
+
+# Main title with animation
+render_title_with_animation(
+    app_name="DocZilla",
+    static_text="Part of the SPEAR Toolkit",
+    animation_type="fade"
+)
 st.markdown("**The file conversion specialist.**")
 
 # Placeholder content
@@ -64,26 +100,5 @@ DocZilla is a comprehensive document conversion and manipulation application.
 See `docs/DocZilla_design_overview.md` for complete specifications.
 """)
 
-# Sidebar
-with st.sidebar:
-    st.image("docs/logo.png", width=150) if Path("docs/logo.png").exists() else st.write("Logo placeholder")
-    st.markdown("### DocZilla")
-    st.caption("The file conversion specialist.")
-    
-    st.markdown("---")
-    st.markdown("### Navigation")
-    st.info("Navigate using the sidebar menu above")
-    
-    st.markdown("---")
-    st.markdown("### Quick Links")
-    col1, col2 = st.columns(2)
-    with col1:
-        if st.button("Input Dir"):
-            st.info("Open Input Directory")
-    with col2:
-        if st.button("Output Dir"):
-            st.info("Open Output Directory")
-    
-    st.markdown("---")
-    st.caption(f"Session: {st.session_state.session_id[:8]}")
+# Main content
 
