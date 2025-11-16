@@ -5,15 +5,24 @@ Configuration and management: directories, logos, logs, cache, dependencies.
 """
 
 import streamlit as st
+import sys
+from pathlib import Path
 
-st.set_page_config(
-    page_title="Settings - DocZilla",
-    page_icon="⚙️",
-    layout="wide"
+# Add src to path for imports
+sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent))
+
+from src.app.components.layout import render_page_header, render_sidebar
+
+# Streamlit multipage: Don't call st.set_page_config() here
+
+# Render sidebar
+render_sidebar()
+
+# Page header
+render_page_header(
+    title="⚙️ Settings",
+    subtitle="Configure DocZilla"
 )
-
-st.title("⚙️ Settings")
-st.caption("Configure DocZilla")
 
 # Placeholder content
 st.info("🚧 Under construction - Coming in Phase 5")

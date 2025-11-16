@@ -46,7 +46,10 @@ class Config:
                 with open(self.config_path, 'r', encoding='utf-8') as f:
                     self._config = json.load(f)
             except Exception as e:
-                print(f"Error loading config: {e}. Using template.")
+                # Log error but don't fail - use template instead
+                import logging
+                logger = logging.getLogger(__name__)
+                logger.warning(f"Error loading config: {e}. Using template.")
                 self._create_from_template()
         else:
             # Create config from template
@@ -64,7 +67,10 @@ class Config:
                 with open(self.config_path, 'w', encoding='utf-8') as f:
                     json.dump(self._config, f, indent=2)
             except Exception as e:
-                print(f"Error creating config from template: {e}")
+                # Log error but don't fail - use defaults
+                import logging
+                logger = logging.getLogger(__name__)
+                logger.warning(f"Error creating config from template: {e}. Using defaults.")
                 self._config = {}
         else:
             # No template, use defaults
