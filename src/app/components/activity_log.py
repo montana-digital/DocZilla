@@ -5,7 +5,13 @@ UI components for displaying activity logs.
 """
 
 import streamlit as st
+import sys
+from pathlib import Path
 from typing import List, Dict, Optional
+
+# Add src to path for imports
+sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent))
+
 from src.app.utils.logging import get_logger, LogLevel
 
 
