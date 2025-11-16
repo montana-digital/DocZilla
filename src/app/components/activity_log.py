@@ -1,91 +1,82 @@
 """
-Activity Log Components
+Activity Log Component
 
-UI components for displaying activity logs.
+Display and filter structured CSV logs.
 """
 
 import streamlit as st
-import sys
 from pathlib import Path
-from typing import List, Dict, Optional
-
-# Add src to path for imports
-sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent))
-
-from src.app.utils.logging import get_logger, LogLevel
+import pandas as pd
+from typing import Optional, List
 
 
-def render_activity_log(
-    logs: List[Dict],
-    filter_level: Optional[str] = None,
-    max_display: int = 100
-):
+def render_activity_log(logs_dir: str | Path = "logs"):
     """
-    Render activity log entries in UI.
-    
+    Render activity log viewer with filters.
+
     Args:
-        logs: List of log entry dictionaries
-        filter_level: Optional level filter (INFO, WARN, ERROR, FATAL)
-        max_display: Maximum entries to display
+        logs_dir: Directory containing CSV logs
     """
-    # Filter by level if specified
-    if filter_level:
-        logs = [log for log in logs if log.get("level", "").upper() == filter_level.upper()]
-    
-    # Limit display
-    logs = logs[:max_display]
-    
-    if not logs:
-        st.info("No log entries found.")
+    logs_path = Path(logs_dir)
+    if not logs_path.exists():
+        st.info("Logs directory not found")
         return
-    
-    # Display logs
-    for log in logs:
-        level = log.get("level", "INFO")
-        timestamp = log.get("timestamp", "")
-        message = log.get("message", "")
-        
-        # Color code by level
-        if level == "ERROR" or level == "FATAL":
-            st.error(f"**{timestamp}** [{level}] {message}")
-        elif level == "WARN":
-            st.warning(f"**{timestamp}** [{level}] {message}")
-        else:
-            st.info(f"**{timestamp}** [{level}] {message}")
 
-
-def render_log_filters() -> Optional[str]:
-    """
-    Render log filter controls.
-    
-    Returns:
-        Selected filter level or None
-    """
-    filter_options = ["All", "INFO", "WARN", "ERROR", "FATAL"]
-    selected = st.selectbox("Filter by level", filter_options)
-    
-    return None if selected == "All" else selected
-
-
-def render_log_statistics(logs: List[Dict]):
-    """
-    Render log statistics summary.
-    
-    Args:
-        logs: List of log entry dictionaries
-    """
-    if not logs:
+    files = sorted(logs_path.glob("*.csv"), key=lambda p: p.stat().st_mtime, reverse=True)
+    if not files:
+        st.info("No log files yet")
         return
-    
-    # Count by level
-    level_counts = {}
-    for log in logs:
-        level = log.get("level", "INFO")
-        level_counts[level] = level_counts.get(level, 0) + 1
-    
-    # Display metrics
-    cols = st.columns(len(level_counts))
-    for i, (level, count) in enumerate(level_counts.items()):
-        with cols[i]:
-            st.metric(level, count)
+
+    sel = st.selectbox("Log file", [p.name for p in files])
+    path = logs_path / sel
+
+    try:
+        df = pd.read_csv(path)
+    except Exception:
+        st.error("Failed to read log CSV")
+        return
+
+    # Normalize expected columns
+    # Expected: timestamp, level, module, request_id, operation, message
+    for col in ["timestamp", "level", "module", "request_id", "operation", "message"]:
+        if col not in df.columns:
+            df[col] = ""
+
+    with st.expander("Filters", expanded=False):
+        cols1 = st.columns(3)
+        with cols1[0]:
+            lvl = st.multiselect("Level", sorted(df["level"].astype(str).unique().tolist()))
+        with cols1[1]:
+            mod = st.multiselect("Module", sorted(df["module"].astype(str).unique().tolist()))
+        with cols1[2]:
+            op = st.multiselect("Operation", sorted(df["operation"].astype(str).unique().tolist()))
+        q = st.text_input("Search text")
+
+    filt = df
+    if lvl:
+        filt = filt[filt["level"].astype(str).isin(lvl)]
+    if mod:
+        filt = filt[filt["module"].astype(str).isin(mod)]
+    if op:
+        filt = filt[filt["operation"].astype(str).isin(op)]
+    if q:
+        mask = (
+            filt["message"].astype(str).str.contains(q, case=False, na=False)
+            | filt["module"].astype(str).str.contains(q, case=False, na=False)
+            | filt["operation"].astype(str).str.contains(q, case=False, na=False)
+        )
+        filt = filt[mask]
+
+    st.dataframe(
+        filt[["timestamp", "level", "module", "operation", "message", "request_id"]].tail(1000),
+        use_container_width=True,
+        hide_index=True,
+    )
+
+    st.download_button(
+        "Download filtered CSV",
+        data=filt.to_csv(index=False).encode("utf-8"),
+        file_name=f"filtered_{sel}",
+        mime="text/csv",
+    )
 

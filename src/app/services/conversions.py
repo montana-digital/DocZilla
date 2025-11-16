@@ -9,10 +9,7 @@ from pathlib import Path
 from typing import Callable, Any, Dict
 from io import StringIO
 
-# Import utilities
-import sys
-sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent))
-
+# Imports using proper package structure
 from src.app.services.file_io import load_data_file, save_data_file
 from src.app.utils.exceptions import ConversionError, OperationalError
 

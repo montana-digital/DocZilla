@@ -26,14 +26,14 @@ except ImportError:
         RESET = ""
     class Style:
         BRIGHT = ""
-        RESET = ""
+        RESET_ALL = ""
 
 
 def print_header(text: str):
     """Print formatted header."""
     print(f"\n{Fore.CYAN}{Style.BRIGHT}{'='*60}")
     print(f"{text:^60}")
-    print(f"{'='*60}{Style.RESET}{Fore.RESET}\n")
+    print(f"{'='*60}{Style.RESET_ALL}{Fore.RESET}\n")
 
 
 def print_success(text: str):
@@ -131,10 +131,20 @@ def run_app(streamlit_exe, python_exe):
     print(f"Press Ctrl+C to stop the app\n")
     
     try:
+        # Set PYTHONPATH to include project root for proper imports
+        import os
+        env = os.environ.copy()
+        current_pythonpath = env.get("PYTHONPATH", "")
+        if current_pythonpath:
+            env["PYTHONPATH"] = f"{str(project_root)}{os.pathsep}{current_pythonpath}"
+        else:
+            env["PYTHONPATH"] = str(project_root)
+        
         # Run streamlit
         subprocess.run(
             [streamlit_exe, "run", str(main_file)],
-            check=True
+            check=True,
+            env=env
         )
     except KeyboardInterrupt:
         print("\n\nApp stopped by user.")

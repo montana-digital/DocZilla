@@ -13,12 +13,9 @@ import xmltodict
 from io import StringIO, BytesIO
 from typing import Any
 
-# Import utilities
-import sys
-sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent))
-
+# Imports using proper package structure
 from src.app.utils.exceptions import OperationalError, ValidationError
-from src.app.utils.validators import validate_file_path, validate_file_extension
+from src.app.utils.validators import validate_file_path, validate_file_extension, sanitize_filename
 
 
 def load_data_file(file_path: str | Path) -> pd.DataFrame:
@@ -341,52 +338,4 @@ def generate_timestamped_filename(original_name: str, extension: str) -> str:
     return filename
 
 
-def sanitize_filename(filename: str) -> str:
-    """
-    Sanitize filename by removing special characters.
-    
-    Args:
-        filename: Original filename
-    
-    Returns:
-        Sanitized filename
-    """
-    import re
-    # Remove special characters except alphanumeric, dash, underscore
-    sanitized = re.sub(r'[^\w\-_]', '_', filename)
-    return sanitized
-
-
-def get_file_hash(file_path: Path) -> str:
-    """
-    Generate SHA256 hash of file content and mtime.
-    
-    Args:
-        file_path: Path to file
-    
-    Returns:
-        SHA256 hash hex string
-    """
-    stat = file_path.stat()
-    mtime = str(stat.st_mtime)
-    
-    with open(file_path, 'rb') as f:
-        content = f.read()
-    
-    combined = content + mtime.encode()
-    return hashlib.sha256(combined).hexdigest()
-
-
-def get_file_metadata(file_path: str) -> dict:
-    """
-    Get file metadata.
-    
-    Args:
-        file_path: Path to file
-    
-    Returns:
-        Dictionary with file metadata
-    """
-    # TODO: Implement metadata extraction
-    raise NotImplementedError
 

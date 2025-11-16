@@ -51,7 +51,7 @@ DocZilla is a comprehensive document conversion and manipulation application bui
    cd DocZilla
    ```
 
-2. **Run the setup script**
+2. **Run the setup script (interactive)**
    ```powershell
    python scripts/setup_app.py
    ```
@@ -63,6 +63,18 @@ DocZilla is a comprehensive document conversion and manipulation application bui
    - Create virtual environment (`.venv_doczilla`)
    - Install dependencies (app only or app + tests)
    - Create necessary directories (logs, temp)
+
+   Non-interactive (recommended for automation):
+   ```powershell
+   # App-only (no dev/test tools)
+   python scripts/setup_app.py --install app --non-interactive
+
+   # App + tests and developer tools
+   python scripts/setup_app.py --install dev --non-interactive
+
+   # Specify Python path explicitly
+   python scripts/setup_app.py --install app --non-interactive --python-path "C:\\Python311\\python.exe"
+   ```
 
 3. **Run the application**
    ```powershell

@@ -10,9 +10,7 @@ import subprocess
 import platform
 from typing import Optional
 
-# Import utilities
-import sys
-sys.path.insert(0, str(Path(__file__).parent.parent.parent))
+# Imports using proper package structure
 from src.app.utils.config import get_config
 
 

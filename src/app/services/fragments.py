@@ -10,10 +10,7 @@ from typing import Optional, Tuple
 import zipfile
 from datetime import datetime
 
-# Import utilities
-import sys
-sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent))
-
+# Imports using proper package structure
 from src.app.services.file_io import load_data_file, save_data_file, generate_timestamped_filename
 from src.app.utils.exceptions import OperationalError
 
@@ -148,7 +145,14 @@ def _split_by_size(
     sample_path = save_data_file(sample_df, temp_file, extension)
     sample_size_bytes = sample_path.stat().st_size
     bytes_per_row = sample_size_bytes / sample_size
-    temp_file.unlink()  # Clean up
+    
+    # Clean up temp file (handle Windows file handle issues)
+    try:
+        if temp_file.exists():
+            temp_file.unlink()
+    except (PermissionError, OSError):
+        # On Windows, file might still be locked - ignore and continue
+        pass
     
     # Calculate rows per file
     rows_per_file = int(target_size_bytes / bytes_per_row) if bytes_per_row > 0 else 10000

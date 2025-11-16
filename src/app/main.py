@@ -7,11 +7,8 @@ Part of the SPEAR Toolkit.
 
 import streamlit as st
 from pathlib import Path
-import sys
 
-# Add src to path for imports
-sys.path.insert(0, str(Path(__file__).parent.parent.parent))
-
+# Imports using proper package structure (PYTHONPATH set by run script)
 from src.app.utils.logging import get_logger, generate_request_id
 from src.app.utils.cache import init_cache_state
 from src.app.utils.config import get_config

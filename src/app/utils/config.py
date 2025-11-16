@@ -4,9 +4,11 @@ Configuration Management
 Loads and manages application configuration from JSON file.
 """
 
+from __future__ import annotations
+
 import json
 from pathlib import Path
-from typing import Any
+from typing import Any, Optional
 
 
 class Config:
@@ -46,10 +48,7 @@ class Config:
                 with open(self.config_path, 'r', encoding='utf-8') as f:
                     self._config = json.load(f)
             except Exception as e:
-                # Log error but don't fail - use template instead
-                import logging
-                logger = logging.getLogger(__name__)
-                logger.warning(f"Error loading config: {e}. Using template.")
+                print(f"Error loading config: {e}. Using template.")
                 self._create_from_template()
         else:
             # Create config from template
@@ -67,10 +66,7 @@ class Config:
                 with open(self.config_path, 'w', encoding='utf-8') as f:
                     json.dump(self._config, f, indent=2)
             except Exception as e:
-                # Log error but don't fail - use defaults
-                import logging
-                logger = logging.getLogger(__name__)
-                logger.warning(f"Error creating config from template: {e}. Using defaults.")
+                print(f"Error creating config from template: {e}")
                 self._config = {}
         else:
             # No template, use defaults
@@ -159,7 +155,7 @@ class Config:
 
 
 # Global config instance
-_config_instance: 'Config' | None = None
+_config_instance: Optional["Config"] = None
 
 
 def get_config() -> Config:

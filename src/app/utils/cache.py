@@ -126,6 +126,40 @@ def get_cache_info() -> dict:
     }
 
 
+def get_cache_stats() -> dict:
+    """
+    Get cache statistics from session state tracking.
+    
+    Returns:
+        Dictionary with cache statistics
+    """
+    init_cache_state()
+    tracker = st.session_state.cache_tracker
+    
+    # Count tracked files
+    file_count = len(tracker.get("file_hashes", {}))
+    
+    # Estimate cache size (rough approximation)
+    # Streamlit doesn't expose actual cache size, so we estimate based on tracked files
+    total_size_bytes = file_count * 1024 * 1024  # Rough estimate: 1MB per file
+    
+    return {
+        "file_count": file_count,
+        "total_size_bytes": total_size_bytes,
+        "tracked_files": list(tracker.get("file_hashes", {}).keys())
+    }
+
+
+def clear_cache():
+    """Clear all caches and tracking."""
+    clear_all_cache()
+    init_cache_state()
+    st.session_state.cache_tracker = {
+        "file_hashes": {},
+        "cache_keys": set()
+    }
+
+
 # Initialize session state for cache tracking
 def init_cache_state():
     """Initialize cache tracking in session state."""

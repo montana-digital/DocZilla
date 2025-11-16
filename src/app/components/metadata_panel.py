@@ -1,7 +1,7 @@
 """
 Metadata Panel Components
 
-Reusable components for displaying file and data metadata.
+Reusable components for displaying file and data metadata with Streamlit fragments.
 """
 
 import streamlit as st
@@ -9,9 +9,11 @@ from typing import Optional, Dict, Any
 from pathlib import Path
 
 
+@st.fragment
 def render_file_metadata(metadata: Dict[str, Any], title: str = "File Metadata"):
     """
     Render file metadata in collapsible section.
+    Uses @st.fragment to prevent unnecessary reruns.
     
     Args:
         metadata: Dictionary of metadata key-value pairs
@@ -42,12 +44,14 @@ def render_multiple_file_metadata(
             st.markdown("---")
 
 
+@st.fragment
 def render_metadata_summary(
     metadata: Dict[str, Any],
     show_details: bool = False
 ):
     """
     Render metadata summary with optional details.
+    Uses @st.fragment to prevent unnecessary reruns.
     
     Args:
         metadata: Dictionary of metadata

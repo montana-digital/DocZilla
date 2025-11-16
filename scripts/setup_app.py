@@ -15,6 +15,7 @@ import platform
 import subprocess
 import json
 from pathlib import Path
+import argparse
 
 # Color codes for Windows terminal
 try:
@@ -30,14 +31,14 @@ except ImportError:
         RESET = ""
     class Style:
         BRIGHT = ""
-        RESET = ""
+        RESET_ALL = ""
 
 
 def print_header(text: str):
     """Print formatted header."""
     print(f"\n{Fore.CYAN}{Style.BRIGHT}{'='*60}")
     print(f"{text:^60}")
-    print(f"{'='*60}{Style.RESET}{Fore.RESET}\n")
+    print(f"{'='*60}{Style.RESET_ALL}{Fore.RESET}\n")
 
 
 def print_success(text: str):
@@ -64,10 +65,7 @@ def check_windows():
         print_warning(f"System detected: {system}")
         print_warning("DocZilla is tested on Windows 10/11")
         print_warning("It may work on other systems but is not officially supported")
-        response = input("\nContinue anyway? (y/n): ")
-        if response.lower() != 'y':
-            print("Setup cancelled.")
-            sys.exit(0)
+        # Non-interactive safe default: continue
     else:
         print_success(f"Windows detected: {platform.version()}")
     
@@ -157,13 +155,8 @@ def create_venv(python_path, venv_path):
     venv_path = Path(venv_path)
     if venv_path.exists():
         print_warning(f"Virtual environment already exists: {venv_path}")
-        response = input("Remove and recreate? (y/n): ")
-        if response.lower() == 'y':
-            import shutil
-            shutil.rmtree(venv_path)
-        else:
-            print("Using existing virtual environment")
-            return str(venv_path / "Scripts" / "python.exe")
+        # Non-interactive: reuse existing env
+        return str(venv_path / "Scripts" / "python.exe")
     
     try:
         # Create venv
@@ -254,44 +247,46 @@ def save_config(venv_path):
     print_success("Configuration saved")
 
 
+def parse_args():
+    parser = argparse.ArgumentParser(description="DocZilla setup")
+    parser.add_argument("--install", choices=["app", "dev"], default="app", help="Install type: app (default) or dev (includes tests and tools)")
+    parser.add_argument("--non-interactive", action="store_true", help="Run without prompts using defaults")
+    parser.add_argument("--python-path", type=str, default=None, help="Path to python executable to create venv")
+    return parser.parse_args()
+
+
 def main():
     """Main setup function."""
+    args = parse_args()
     print_header("DocZilla Setup")
     
     # Check Windows
     check_windows()
     
-    # List Python versions
-    versions = list_python_versions()
-    if not versions:
-        print_error("No Python versions found")
-        sys.exit(1)
-    
-    # Select Python version
-    selected_version, python_path = select_python_version(versions)
-    print_success(f"Selected: Python {selected_version}")
+    # Determine Python path
+    if args.python_path:
+        python_path = args.python_path
+        selected_version = "custom"
+        print_success(f"Using provided Python: {python_path}")
+    else:
+        versions = list_python_versions()
+        if not versions:
+            print_error("No Python versions found")
+            sys.exit(1)
+        if args.non_interactive:
+            selected_version, python_path = versions[0]
+            print_success(f"Auto-selected: Python {selected_version}")
+        else:
+            selected_version, python_path = select_python_version(versions)
+            print_success(f"Selected: Python {selected_version}")
     
     # Create venv
     project_root = Path(__file__).parent.parent
     venv_path = project_root / ".venv_doczilla"
     venv_python = create_venv(python_path, venv_path)
     
-    # Ask about dev dependencies
-    print_header("Installation Type")
-    print("1. App only (base requirements)")
-    print("2. App + Development tools (base + dev requirements)")
-    while True:
-        choice = input("Select option (1 or 2): ")
-        if choice == "1":
-            include_dev = False
-            break
-        elif choice == "2":
-            include_dev = True
-            break
-        else:
-            print_error("Invalid selection")
-    
     # Install dependencies
+    include_dev = (args.install == "dev")
     install_dependencies(venv_python, include_dev=include_dev)
     
     # Create directories

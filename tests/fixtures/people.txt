@@ -1,0 +1,201 @@
+id	name	age	income	phone	url
+1	Bob	22.0	81498.22	+44 20 7946 0958	
+2	Bob	58.0	61372.8	+44 20 7946 0958	
+3	Bob	52.0	68711.66	0044 20 7946 0958	http://www.test.com/a
+4	Jon Smith	40.0	59148.25	0044 20 7946 0958	news.example.org
+5	Charlie	40.0	57443.89	(202) 555-0143	https://example.com/path?a=1
+6	Charlie	62.0	48307.76	0044 20 7946 0958	https://example.com/path?a=1
+7	John Smith	22.0	66454.52	+44 20 7946 0958	https://example.com/path?a=1
+8	Jon Smith	54.0	47226.94	+1 202-555-0156	https://example.com/path?a=1
+9	Charlie	28.0	69983.78	(202) 555-0143	news.example.org
+10	Jon Smith	22.0	76279.31		https://example.com/path?a=1
+11	Bob	45.0	65497.97	0044 20 7946 0958	example.com/path
+12	Charlie	68.0	55706.27		http://www.test.com/a
+13	John Smith	56.0		(202) 555-0143	example.com/path
+14	Jon Smith	57.0	55369.9	+44 20 7946 0958	example.com/path
+15	Charlie	55.0	74033.21		
+16	Jon Smith	58.0	32528.91	(202) 555-0143	example.com/path
+17	Jon Smith	44.0	54965.89	+1 202-555-0156	news.example.org
+18	Alice	24.0		+44 20 7946 0958	news.example.org
+19	Charlie	61.0	37574.09		
+20	Jon Smith	41.0	80457.93	+44 20 7946 0958	http://www.test.com/a
+21	Charlie	44.0	73427.77	+1 202-555-0156	example.com/path
+22	Charlie	37.0	49207.8	(202) 555-0143	example.com/path
+23	Alice	27.0	37462.45		example.com/path
+24	Bob	66.0	15532.07		
+25	John Smith	58.0	51847.57	+1 202-555-0156	http://www.test.com/a
+26	Bob	51.0	96306.23		https://example.com/path?a=1
+27	Bob	38.0	66523.26	+1 202-555-0156	news.example.org
+28	Bob	60.0	51606.42	0044 20 7946 0958	news.example.org
+29	Bob	46.0	66976.2	(202) 555-0143	https://example.com/path?a=1
+30	Charlie	41.0	36585.62		example.com/path
+31	Alice	41.0	55540.15	(202) 555-0143	news.example.org
+32	Alice	29.0	61492.16	(202) 555-0143	http://www.test.com/a
+33	John Smith	22.0	58708.49	+44 20 7946 0958	
+34	Jon Smith	46.0	71862.09		example.com/path
+35	Alice	64.0	65169.68	+1 202-555-0156	news.example.org
+36	Alice	21.0		+44 20 7946 0958	news.example.org
+37	Charlie	62.0	49674.42	+1 202-555-0156	example.com/path
+38	Jon Smith	61.0	73467.23		example.com/path
+39	Jon Smith	32.0		+44 20 7946 0958	example.com/path
+40	John Smith	50.0	45447.76		http://www.test.com/a
+41	Alice	26.0	46684.57	(202) 555-0143	
+42	Charlie	57.0	80036.77	(202) 555-0143	
+43	Bob	54.0	57129.84	(202) 555-0143	http://www.test.com/a
+44	Jon Smith	36.0	81057.32	0044 20 7946 0958	
+45	Charlie	21.0	53361.96	(202) 555-0143	news.example.org
+46	Charlie	68.0			example.com/path
+47	Charlie		61972.29	(202) 555-0143	https://example.com/path?a=1
+48	Charlie	64.0	63873.43	+44 20 7946 0958	http://www.test.com/a
+49	John Smith	53.0	83470.77	+1 202-555-0156	http://www.test.com/a
+50	Bob	58.0		0044 20 7946 0958	http://www.test.com/a
+51	Charlie	57.0	45883.17	+44 20 7946 0958	
+52	Charlie	28.0	53271.54	+1 202-555-0156	http://www.test.com/a
+53	Alice	36.0	66785.01		example.com/path
+54	Bob	42.0	36513.61	+44 20 7946 0958	example.com/path
+55	Alice	43.0	69562.06	+1 202-555-0156	https://example.com/path?a=1
+56	Jon Smith	20.0	51918.43		https://example.com/path?a=1
+57	Alice	46.0	77217.19		http://www.test.com/a
+58	Jon Smith	26.0	24086.1	+44 20 7946 0958	example.com/path
+59	John Smith	56.0	48201.51	(202) 555-0143	http://www.test.com/a
+60	Bob	53.0		(202) 555-0143	http://www.test.com/a
+61	Bob	65.0	47606.56	0044 20 7946 0958	news.example.org
+62	Jon Smith	56.0	63714.99	(202) 555-0143	https://example.com/path?a=1
+63	Jon Smith	37.0	57311.6	+1 202-555-0156	
+64	Bob	68.0		+1 202-555-0156	
+65	Charlie	39.0	57612.23	0044 20 7946 0958	example.com/path
+66	Alice	34.0	63050.82	0044 20 7946 0958	http://www.test.com/a
+67	Alice	65.0	44871.96		https://example.com/path?a=1
+68	Alice	37.0	70602.74	+1 202-555-0156	http://www.test.com/a
+69	John Smith	21.0	69939.99	+44 20 7946 0958	news.example.org
+70	Alice	42.0	65775.57	+44 20 7946 0958	http://www.test.com/a
+71	Alice	59.0	68348.0	+1 202-555-0156	news.example.org
+72	Alice	27.0	64446.27	+44 20 7946 0958	example.com/path
+73	John Smith	42.0	90526.1	0044 20 7946 0958	http://www.test.com/a
+74	Alice	24.0	58693.59		http://www.test.com/a
+75	John Smith	53.0	55393.75	+1 202-555-0156	news.example.org
+76	Charlie	42.0	48697.09	0044 20 7946 0958	example.com/path
+77	Alice	35.0	44516.06	+44 20 7946 0958	https://example.com/path?a=1
+78	John Smith	29.0	41332.92		https://example.com/path?a=1
+79	Charlie	47.0	46668.04	0044 20 7946 0958	
+80	Jon Smith	52.0	58939.79	+44 20 7946 0958	news.example.org
+81	Bob	66.0	65014.43	(202) 555-0143	news.example.org
+82	Jon Smith	40.0	60767.13	0044 20 7946 0958	http://www.test.com/a
+83	Alice	26.0	48516.97	(202) 555-0143	example.com/path
+84	Bob	61.0			https://example.com/path?a=1
+85	Jon Smith	50.0	71091.19	+44 20 7946 0958	https://example.com/path?a=1
+86	Bob	54.0	57605.28	+44 20 7946 0958	https://example.com/path?a=1
+87	Jon Smith	23.0	50206.26		news.example.org
+88	John Smith	34.0	68226.42	(202) 555-0143	http://www.test.com/a
+89	John Smith	57.0	62819.6	0044 20 7946 0958	news.example.org
+90	John Smith	61.0	38278.09	(202) 555-0143	
+91	John Smith	40.0	58980.3	(202) 555-0143	http://www.test.com/a
+92	Jon Smith	59.0	63930.54	0044 20 7946 0958	news.example.org
+93	Jon Smith	61.0	46504.58		news.example.org
+94	Jon Smith	38.0	62847.65	0044 20 7946 0958	
+95	John Smith	64.0	38177.66	(202) 555-0143	news.example.org
+96	Bob		80042.79	+44 20 7946 0958	example.com/path
+97	Jon Smith	30.0	78719.25	(202) 555-0143	http://www.test.com/a
+98	Charlie	53.0	56212.24	+1 202-555-0156	
+99	John Smith		65451.82	+1 202-555-0156	
+100	Alice	25.0	23851.17		example.com/path
+101	John Smith	61.0	42654.79	+1 202-555-0156	news.example.org
+102	Bob	28.0	55593.32	0044 20 7946 0958	example.com/path
+103	Jon Smith	59.0	43918.0	0044 20 7946 0958	https://example.com/path?a=1
+104	Charlie	18.0	70715.95		https://example.com/path?a=1
+105	Jon Smith	59.0	89959.45	(202) 555-0143	example.com/path
+106	Charlie	58.0	42350.78		
+107	John Smith	58.0	47438.05	0044 20 7946 0958	example.com/path
+108	Bob	52.0	63531.73	0044 20 7946 0958	http://www.test.com/a
+109	John Smith	42.0	84166.74	+44 20 7946 0958	example.com/path
+110	Jon Smith	54.0	41664.39		example.com/path
+111	Bob	32.0	63735.54		http://www.test.com/a
+112	John Smith	58.0	87319.48	(202) 555-0143	example.com/path
+113	Bob	46.0	35223.61	(202) 555-0143	news.example.org
+114	John Smith	41.0	40783.96		http://www.test.com/a
+115	John Smith	44.0	53645.9	+1 202-555-0156	news.example.org
+116	John Smith	47.0	52191.17	0044 20 7946 0958	https://example.com/path?a=1
+117	John Smith	19.0	72189.02	+44 20 7946 0958	
+118	John Smith	25.0	63624.9	+44 20 7946 0958	https://example.com/path?a=1
+119	John Smith	30.0	33375.57		https://example.com/path?a=1
+120	John Smith	23.0	67731.16	0044 20 7946 0958	example.com/path
+121	Bob	40.0	51336.92	+44 20 7946 0958	news.example.org
+122	Jon Smith	52.0	79116.71	+1 202-555-0156	
+123	Charlie	52.0	50586.19	(202) 555-0143	http://www.test.com/a
+124	Bob	42.0	50450.77	+44 20 7946 0958	example.com/path
+125	Charlie	62.0	68116.97	(202) 555-0143	http://www.test.com/a
+126	Charlie	47.0	71443.9	0044 20 7946 0958	news.example.org
+127	Jon Smith	22.0	66721.49	+44 20 7946 0958	
+128	Jon Smith	57.0	34716.04	+44 20 7946 0958	news.example.org
+129	Alice	47.0	68070.52	0044 20 7946 0958	http://www.test.com/a
+130	Bob	51.0	44485.38	(202) 555-0143	
+131	Jon Smith	47.0	63529.14		
+132	Alice	46.0	38643.98	(202) 555-0143	https://example.com/path?a=1
+133	Alice	22.0	66694.83	+1 202-555-0156	example.com/path
+134	Alice	47.0	47901.02	+1 202-555-0156	example.com/path
+135	Charlie	59.0	40760.48		
+136	Bob	33.0	70707.3		
+137	John Smith	49.0	63624.67	(202) 555-0143	http://www.test.com/a
+138	Bob	19.0	50790.35	+1 202-555-0156	
+139	Bob		81767.68	+1 202-555-0156	example.com/path
+140	Alice	40.0	211863.82993694177		https://example.com/path?a=1
+141	John Smith	69.0	60481.62	+1 202-555-0156	example.com/path
+142	Bob	29.0	64033.7	+44 20 7946 0958	example.com/path
+143	Bob	32.0	50705.01	+1 202-555-0156	http://www.test.com/a
+144	Alice	39.0	67067.04	0044 20 7946 0958	news.example.org
+145	Alice	69.0	51998.21	0044 20 7946 0958	http://www.test.com/a
+146	Charlie	62.0	53825.43	+44 20 7946 0958	news.example.org
+147	Alice	19.0	80439.64		news.example.org
+148	John Smith	30.0	44391.21	+44 20 7946 0958	news.example.org
+149	Jon Smith	60.0	23808.3	(202) 555-0143	http://www.test.com/a
+150	John Smith	21.0	84164.05		
+151	Alice	62.0	98239.92	(202) 555-0143	news.example.org
+152	Charlie	32.0	53920.96	0044 20 7946 0958	news.example.org
+153	Charlie	65.0	30947.43		
+154	Jon Smith	33.0	55342.74	+1 202-555-0156	
+155	Jon Smith	40.0	55706.66	0044 20 7946 0958	https://example.com/path?a=1
+156	Alice	52.0	57151.14	(202) 555-0143	news.example.org
+157	Charlie	24.0	43299.18	+1 202-555-0156	
+158	John Smith	46.0	68693.42	(202) 555-0143	example.com/path
+159	Jon Smith	44.0	67867.61	+1 202-555-0156	https://example.com/path?a=1
+160	Charlie	58.0	37583.92	0044 20 7946 0958	news.example.org
+161	Alice	69.0	70487.95	+44 20 7946 0958	example.com/path
+162	John Smith	52.0	90790.27	(202) 555-0143	example.com/path
+163	Alice	39.0	62579.4	0044 20 7946 0958	http://www.test.com/a
+164	Alice	39.0	54940.12		http://www.test.com/a
+165	Bob	39.0	57869.95		http://www.test.com/a
+166	Bob	60.0	69228.85	0044 20 7946 0958	https://example.com/path?a=1
+167	Charlie	34.0	34039.93	+44 20 7946 0958	http://www.test.com/a
+168	John Smith	26.0	62465.86	+44 20 7946 0958	news.example.org
+169	Bob	35.0	54143.04	+44 20 7946 0958	example.com/path
+170	Alice	19.0	87717.38		news.example.org
+171	John Smith	23.0	57387.41		https://example.com/path?a=1
+172	John Smith	22.0	85018.31	+1 202-555-0156	example.com/path
+173	Bob	58.0	43443.89	(202) 555-0143	example.com/path
+174	Bob	55.0	68808.89	(202) 555-0143	http://www.test.com/a
+175	Alice	54.0	64791.0	(202) 555-0143	https://example.com/path?a=1
+176	Charlie	42.0	46964.29		news.example.org
+177	Alice	55.0			
+178	Alice	26.0	78187.78	+1 202-555-0156	https://example.com/path?a=1
+179	Bob	64.0	55143.12	0044 20 7946 0958	https://example.com/path?a=1
+180	John Smith	44.0	34620.56	+1 202-555-0156	https://example.com/path?a=1
+181	Charlie	66.0	59736.56		https://example.com/path?a=1
+182	Alice	25.0	46463.65	0044 20 7946 0958	news.example.org
+183	John Smith	43.0	54864.89	(202) 555-0143	news.example.org
+184	Jon Smith	54.0	58776.18	+1 202-555-0156	example.com/path
+185	Charlie	43.0	34415.22	0044 20 7946 0958	example.com/path
+186	Alice	41.0	35765.12	0044 20 7946 0958	http://www.test.com/a
+187	John Smith	26.0	67231.0		http://www.test.com/a
+188	Alice	37.0	52159.22	(202) 555-0143	
+189	Jon Smith	30.0	21528.83	+1 202-555-0156	example.com/path
+190	Jon Smith	33.0	71772.66	(202) 555-0143	
+191	Alice	53.0	64085.55	0044 20 7946 0958	example.com/path
+192	Jon Smith	50.0	49291.88	0044 20 7946 0958	http://www.test.com/a
+193	Alice	49.0	40247.55	(202) 555-0143	example.com/path
+194	Jon Smith	36.0	72537.12	0044 20 7946 0958	https://example.com/path?a=1
+195	John Smith	67.0	65240.26	+1 202-555-0156	news.example.org
+196	Bob	22.0	95739.03		https://example.com/path?a=1
+197	Alice	35.0	66302.83	(202) 555-0143	example.com/path
+198	Bob	24.0		(202) 555-0143	
+199	John Smith	35.0	57496.08	+1 202-555-0156	news.example.org
+200	John Smith		72251.64	+44 20 7946 0958	example.com/path

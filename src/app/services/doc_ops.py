@@ -94,7 +94,7 @@ def _extract_text_from_docx(file_path: Path) -> str:
 
 
 # -----------------------------
-# Search Index (simple)
+# Search Index (in-memory and persistent)
 # -----------------------------
 
 class InMemorySearchIndex:
@@ -110,11 +110,6 @@ class InMemorySearchIndex:
         self._index.clear()
 
     def search(self, query: str) -> Dict[str, List[str]]:
-        """
-        Search for query in indexed documents.
-
-        Returns mapping filename -> list of matched snippets.
-        """
         results: Dict[str, List[str]] = {}
         q = (query or "").strip()
         if not q:
@@ -123,10 +118,9 @@ class InMemorySearchIndex:
         for file_name, text in self._index.items():
             if not text:
                 continue
-            if q.lower() in text.lower():
-                # Return up to 3 snippets around the first few matches
+            lower_text = text.lower()
+            if q.lower() in lower_text:
                 snippets: List[str] = []
-                lower_text = text.lower()
                 start = 0
                 while True:
                     idx = lower_text.find(q.lower(), start)
@@ -137,6 +131,54 @@ class InMemorySearchIndex:
                     snippets.append(text[snippet_start:snippet_end].replace("\n", " "))
                     start = idx + len(q)
                 results[file_name] = snippets
+        return results
+
+
+class PersistentSearchIndex:
+    """File-based index storing extracted text under a directory."""
+
+    def __init__(self, index_dir: Path):
+        self.index_dir = Path(index_dir)
+        self.index_dir.mkdir(parents=True, exist_ok=True)
+
+    def _doc_path(self, file_name: str) -> Path:
+        safe = file_name.replace('/', '_').replace('\\', '_')
+        return self.index_dir / f"{safe}.txt"
+
+    def add(self, file_name: str, text: str):
+        p = self._doc_path(file_name)
+        p.write_text(text or "", encoding="utf-8")
+
+    def clear(self):
+        for p in self.index_dir.glob("*.txt"):
+            try:
+                p.unlink()
+            except Exception:
+                pass
+
+    def search(self, query: str) -> Dict[str, List[str]]:
+        results: Dict[str, List[str]] = {}
+        q = (query or "").strip()
+        if not q:
+            return results
+        for p in self.index_dir.glob("*.txt"):
+            try:
+                text = p.read_text(encoding="utf-8", errors="ignore")
+            except Exception:
+                continue
+            lower_text = text.lower()
+            if q.lower() in lower_text:
+                snippets: List[str] = []
+                start = 0
+                while True:
+                    idx = lower_text.find(q.lower(), start)
+                    if idx == -1 or len(snippets) >= 3:
+                        break
+                    snippet_start = max(0, idx - 80)
+                    snippet_end = min(len(text), idx + len(q) + 80)
+                    snippets.append(text[snippet_start:snippet_end].replace("\n", " "))
+                    start = idx + len(q)
+                results[p.stem] = snippets
         return results
 
 
@@ -226,3 +268,34 @@ def remove_pages(pdf_path: Path, pages_to_remove: List[int], output_path: Path) 
         writer.write(f)
 
     return output_path
+
+
+# -----------------------------
+# Conversions (best-effort)
+# -----------------------------
+
+def convert_docx_to_pdf(src_docx: Path, dest_pdf: Path) -> Path:
+    """Convert DOCX to PDF using docx2pdf if available."""
+    try:
+        from docx2pdf import convert as d2p_convert  # type: ignore
+    except Exception as e:
+        raise RuntimeError("docx2pdf is required for DOCX→PDF. Install with: pip install docx2pdf") from e
+    dest_pdf.parent.mkdir(parents=True, exist_ok=True)
+    # docx2pdf writes to a directory; use temp strategy
+    d2p_convert(str(src_docx), str(dest_pdf))
+    return dest_pdf
+
+
+def convert_pdf_to_docx(src_pdf: Path, dest_docx: Path) -> Path:
+    """Convert PDF to DOCX using pdf2docx if available (formatting may degrade)."""
+    try:
+        from pdf2docx import Converter  # type: ignore
+    except Exception as e:
+        raise RuntimeError("pdf2docx is required for PDF→DOCX. Install with: pip install pdf2docx") from e
+    dest_docx.parent.mkdir(parents=True, exist_ok=True)
+    cv = Converter(str(src_pdf))
+    try:
+        cv.convert(str(dest_docx))
+    finally:
+        cv.close()
+    return dest_docx

@@ -1,7 +1,7 @@
 """
 Table Components
 
-Reusable table and data display components.
+Reusable table and data display components with Streamlit fragments for performance.
 """
 
 import streamlit as st
@@ -9,9 +9,11 @@ import pandas as pd
 from typing import Optional
 
 
+@st.fragment
 def render_data_table(df: pd.DataFrame, max_rows: int = 1000, key: Optional[str] = None):
     """
     Render data table with pagination for large datasets.
+    Uses @st.fragment to prevent unnecessary reruns.
     
     Args:
         df: DataFrame to display
