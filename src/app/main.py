@@ -10,7 +10,12 @@ from pathlib import Path
 import sys
 import platform
 
-# Imports using proper package structure (PYTHONPATH set by run script)
+# Ensure project root is in Python path (for direct execution)
+project_root = Path(__file__).parent.parent.parent
+if str(project_root) not in sys.path:
+    sys.path.insert(0, str(project_root))
+
+# Imports using proper package structure
 from src.app.utils.logging import get_logger, generate_request_id
 from src.app.utils.cache import init_cache_state
 from src.app.utils.config import get_config
